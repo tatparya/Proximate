@@ -31,4 +31,12 @@
     <string name="password_doesnt_match_message">The passwords do not match!</string>
     <string name="latitude_title">Latitude :</string>
     <string name="longitude_title">Longitude :</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="app_moto">proximity based messaging</string>
+    <string name="username_title">Username :</string>
+    <string name="welcome_label">Welcome,</string>
+    <string name="title_activity_message">MessageActivity</string>
+    <string name="title_message">Message</string>
+    <string name="label_send">Send</string>
+    <string name="message_hint">type your message</string>
 </resources>

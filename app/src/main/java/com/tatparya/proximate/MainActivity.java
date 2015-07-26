@@ -57,8 +57,6 @@ public class MainActivity extends ActionBarActivity {
             startLoginActivity();
         }
 
-        Log.d(ProximateApplication.LOGTAG, "Continuing with user");
-
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());

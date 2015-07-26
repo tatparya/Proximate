@@ -1,15 +1,15 @@
 package com.tatparya.proximate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.parse.*;
 
 import java.util.List;
@@ -101,6 +101,22 @@ public class NearbyFragment extends Fragment {
         );
         mListView.setAdapter( mListAdapter );
         //  Set onClick Listener
-        // TODO
+        mListView.setOnItemClickListener( messageSelectedUser() );
+    }
+
+    @NonNull
+    private AdapterView.OnItemClickListener messageSelectedUser() {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //  Get reciever username and start message activity
+                String receiver = mUsers.get( position ).getUsername();
+                Log.d( ProximateApplication.LOGTAG, "Messaging : " + receiver );
+                Intent intent = new Intent( mContext, MessageActivity.class );
+                intent.putExtra( ParseConstants.KEY_RECIPIENT_NAME, receiver );
+                startActivity( intent );
+            }
+        };
     }
 }

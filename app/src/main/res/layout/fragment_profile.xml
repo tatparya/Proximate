@@ -13,25 +13,55 @@
             android:id="@+id/textView" android:layout_gravity="center_horizontal"
             android:textAllCaps="true"
             android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
-    <LinearLayout
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/username_layout"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentLeft="true" >
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/welcome_label"
+                        android:id="@+id/welcome_title"/>
+                <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/hello_world"
+                        android:id="@+id/username_text"/>
+                <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="!"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:orientation="horizontal"
             android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/latitude_layout"
-            android:layout_below="@+id/textView"
+            android:layout_below="@+id/username_layout"
             android:layout_alignParentLeft="true" >
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/latitude_title"
                     android:id="@+id/latitude_title"/>
             <TextView
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/hello_world"
                     android:id="@+id/latitude_text"/>
             </LinearLayout>
@@ -48,14 +78,14 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/longitude_title"
                     android:id="@+id/longitude_title"/>
             <TextView
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/hello_world"
                     android:id="@+id/longitude_text"/>
     </LinearLayout>

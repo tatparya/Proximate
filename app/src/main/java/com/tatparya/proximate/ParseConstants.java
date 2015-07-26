@@ -14,7 +14,7 @@ public class ParseConstants {
     public static final String KEY_USER_LOCATION = "userLocation";
 
     //  Message Class Fields
-    public static final String KEY_RECIPIENT_IDS = "recipientIds";
+    public static final String KEY_RECIPIENT_NAME = "recipientName";
     public static final String KEY_SENDER_ID = "senderId";
     public static final String KEY_SENDER_NAME = "senderName";
     public static final String KEY_FILE = "file";

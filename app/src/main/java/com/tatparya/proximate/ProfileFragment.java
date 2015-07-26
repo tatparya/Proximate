@@ -34,10 +34,12 @@ public class ProfileFragment extends Fragment {
         mUserLocation = (ParseGeoPoint) mCurrentUser.get( ParseConstants.KEY_USER_LOCATION );
         TextView longitudeText = ( TextView ) mRootView.findViewById( R.id.longitude_text );
         TextView latitudeText = ( TextView ) mRootView.findViewById( R.id.latitude_text );
+        TextView usernameText = ( TextView ) mRootView.findViewById( R.id.username_text );
         if( mUserLocation != null )
         {
             longitudeText.setText( String.valueOf( mUserLocation.getLongitude() ) );
             latitudeText.setText( String.valueOf( mUserLocation.getLatitude() ) );
+            usernameText.setText( mCurrentUser.getUsername() );
         }
         else
         {
