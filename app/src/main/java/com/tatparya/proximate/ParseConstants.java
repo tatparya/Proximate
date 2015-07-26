@@ -11,6 +11,7 @@ public class ParseConstants {
     //  Field names
     public static final String KEY_USERNAME = "username";
     public static final String KEY_FRIENDS_RELATION = "friendsRelation";
+    public static final String KEY_USER_LOCATION = "userLocation";
 
     //  Message Class Fields
     public static final String KEY_RECIPIENT_IDS = "recipientIds";

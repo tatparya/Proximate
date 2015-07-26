@@ -15,6 +15,7 @@ public class ProximateApplication extends Application {
     //  Some constant string definitions
     public static final String APPNAME  =   "Proximate";
     public static final String LOGTAG   =   "DebugLog";
+    public static GoogleLocationService mGoogleLocationService;
 
     @Override
     public void onCreate() {
@@ -27,7 +28,13 @@ public class ProximateApplication extends Application {
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "kBvdtUIa0x3OaBzL1KbsN7rqzBEj0evV85UkUvNZ", "QonhJQPW6olGk5CU5DwHQ1bAXcklTk07yeaFF3MQ");
 
+        mGoogleLocationService = new GoogleLocationService( getApplicationContext() );
+        mGoogleLocationService.connectService();
     }
 
-
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        mGoogleLocationService.disconnectService();
+    }
 }

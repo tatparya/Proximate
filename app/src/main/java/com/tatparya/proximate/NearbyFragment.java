@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.parse.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class NearbyFragment extends Fragment {
     protected List<ParseUser> mUsers;
     protected ParseRelation<ParseUser> mFriendsRelation;
     protected ParseUser mCurrentUser;
+    protected ParseGeoPoint mUserLocation;
     protected ArrayAdapter<String> mListAdapter;
     protected ListView mListView;
     protected TextView emptyTextView;
@@ -33,6 +35,11 @@ public class NearbyFragment extends Fragment {
         mListView = (ListView) mRootView.findViewById(R.id.nearbyListView);
         emptyTextView = (TextView) mRootView.findViewById(R.id.emptyListView);
         mContext = getActivity();
+        if( mCurrentUser != null )
+        {
+            mUserLocation = (ParseGeoPoint) mCurrentUser.get( ParseConstants.KEY_USER_LOCATION );
+        }
+
         return mRootView;
     }
 
@@ -44,19 +51,21 @@ public class NearbyFragment extends Fragment {
         mCurrentUser = ParseUser.getCurrentUser();
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.orderByAscending( ParseConstants.KEY_USERNAME );
+        query.whereNear( ParseConstants.KEY_USER_LOCATION, mUserLocation );
         query.setLimit(100);
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> list, ParseException e) {
                 if( e == null )
                 {
-                    //  Success : Extract usernames and set to list
+                    //  Success : Extract user names and set to list
                     setUsersToList( list );
                 }
                 else
                 {
                     //  Failed : Show error message
+                    Toast.makeText(mContext, "Failed to find people nearby.\nPlease try again later!",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

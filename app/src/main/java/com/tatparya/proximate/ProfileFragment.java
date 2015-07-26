@@ -5,16 +5,45 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
 
 /**
  * Created by Tatparya_2 on 7/25/2015.
  */
 public class ProfileFragment extends Fragment {
 
+    protected ParseUser mCurrentUser;
+    protected ParseGeoPoint mUserLocation;
+    private View mRootView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View mRootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_profile, container, false);
         return mRootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mCurrentUser = ParseUser.getCurrentUser();
+
+        //  Retrieve location values
+        mUserLocation = (ParseGeoPoint) mCurrentUser.get( ParseConstants.KEY_USER_LOCATION );
+        TextView longitudeText = ( TextView ) mRootView.findViewById( R.id.longitude_text );
+        TextView latitudeText = ( TextView ) mRootView.findViewById( R.id.latitude_text );
+        if( mUserLocation != null )
+        {
+            longitudeText.setText( String.valueOf( mUserLocation.getLongitude() ) );
+            latitudeText.setText( String.valueOf( mUserLocation.getLatitude() ) );
+        }
+        else
+        {
+            longitudeText.setText( "Not available" );
+            latitudeText.setText( "Not available" );
+        }
+
+    }
 }

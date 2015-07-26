@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.parse.ParseAnalytics;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
 public class MainActivity extends ActionBarActivity {
@@ -33,6 +34,7 @@ public class MainActivity extends ActionBarActivity {
 
     //  VARIABLE DECLARATIONS
     protected ParseUser mCurrentUser;
+    private ParseGeoPoint mGeoPoint;
 
     //  ACTIVITY METHODS
 
@@ -40,7 +42,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         //  Parse Analytics
         ParseAnalytics.trackAppOpened(getIntent());
@@ -52,8 +53,11 @@ public class MainActivity extends ActionBarActivity {
             Log.d(ProximateApplication.LOGTAG, "User logged in : " + mCurrentUser.getUsername());
         } else {
             //  User not logged in, Start Login Activity
+            Log.d(ProximateApplication.LOGTAG, "No user logged in, starting loginActivity");
             startLoginActivity();
         }
+
+        Log.d(ProximateApplication.LOGTAG, "Continuing with user");
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -63,6 +67,28 @@ public class MainActivity extends ActionBarActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //  Update location
+        mGeoPoint = ProximateApplication.mGoogleLocationService.getLocation();
+        if( mGeoPoint != null )
+        {
+            mCurrentUser.put( ParseConstants.KEY_USER_LOCATION, mGeoPoint );
+            mCurrentUser.saveInBackground();
+        }
+        else
+        {
+            Log.e( ProximateApplication.LOGTAG, "Failed to find location : Main Activity");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     //  OPTIONS MENU METHODS
@@ -97,8 +123,10 @@ public class MainActivity extends ActionBarActivity {
 
     //  CUSTOM METHODS
 
+    //  Start Login Activity
     private void startLoginActivity() {
         //  Start Login Activity
+        Log.d(ProximateApplication.LOGTAG, "Starting loginActivity");
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

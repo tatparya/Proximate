@@ -25,6 +25,7 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Log.d( ProximateApplication.LOGTAG, "In Login Activity" );
 
         //  Find views
         mUsername = ( EditText ) findViewById( R.id.usernameField );

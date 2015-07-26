@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -22,6 +23,7 @@ public class SignUpActivity extends ActionBarActivity {
     protected EditText mPasswordConfirm;
     protected EditText mEmail;
     protected Button mSignUpButton;
+    protected ParseGeoPoint point;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class SignUpActivity extends ActionBarActivity {
         mPasswordConfirm = ( EditText ) findViewById( R.id.passwordConfirmField );
         mEmail = ( EditText ) findViewById( R.id.emailField );
         mSignUpButton = ( Button ) findViewById( R.id.signUpButton );
+
         //  Set click listener to button
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +116,9 @@ public class SignUpActivity extends ActionBarActivity {
             newUser.setUsername( username );
             newUser.setEmail( email );
             newUser.setPassword( password );
-            //  Show progress indicator
+            point = ProximateApplication.mGoogleLocationService.getLocation();
+            newUser.put( ParseConstants.KEY_USER_LOCATION, point );
+            Log.d( ProximateApplication.LOGTAG, "Got user location!" );
             //  Sign Up User
             newUser.signUpInBackground(new SignUpCallback() {
                 //  Call Back when sign up completes
@@ -122,24 +127,21 @@ public class SignUpActivity extends ActionBarActivity {
                 public void done(ParseException e) {
                     //  Hide progress indicator
                     //  Check if sign up success
-                    if( e == null )
-                    {
-                        Log.d( ProximateApplication.LOGTAG, "Saved user successfully!!" );
-                        Toast.makeText( SignUpActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT ).show();
+                    if (e == null) {
+                        Log.d(ProximateApplication.LOGTAG, "Saved user successfully!!");
+                        Toast.makeText(SignUpActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
                         //  Launch Main Activity
-                        Intent intent = new Intent( SignUpActivity.this, MainActivity.class );
+                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                         //  To clear the activity stack
-                        intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                        intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
-                        startActivity( intent );
-                    }
-                    else
-                    {
-                        Log.d( ProximateApplication.LOGTAG, "Saving user failed!!" );
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } else {
+                        Log.d(ProximateApplication.LOGTAG, "Saving user failed!!");
                         //  Sign up failed
-                        AlertDialog.Builder builder = new AlertDialog.Builder( SignUpActivity.this );
-                        builder.setTitle( R.string.error_title );
-                        builder.setMessage( "Sign up failed, please try again!\nError : " + e.getMessage() );
+                        AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
+                        builder.setTitle(R.string.error_title);
+                        builder.setMessage("Sign up failed, please try again!\nError : " + e.getMessage());
                         builder.setPositiveButton(android.R.string.ok, null);
                         AlertDialog dialog = builder.create();
                         dialog.show();

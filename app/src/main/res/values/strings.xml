@@ -19,7 +19,7 @@
     <string name="empty_field_error_message">Please make sure none of the fields are empty!</string>
     <string name="error_title">Oops!</string>
     <string name="login_button_label">Login</string>
-    <string name="sign_up_text">SIgn Up!</string>
+    <string name="sign_up_text">Sign Up!</string>
     <string name="action_logout">Logout</string>
     <string name="empty_list_message">No Users Nearby!\nInvite your Friends!</string>
     <string name="service_not_available">Service Not Available</string>
@@ -29,4 +29,6 @@
     <string name="no_geocoder_available">No location available</string>
     <string name="password_confirm_hint">Confirm Password</string>
     <string name="password_doesnt_match_message">The passwords do not match!</string>
+    <string name="latitude_title">Latitude :</string>
+    <string name="longitude_title">Longitude :</string>
 </resources>
