@@ -1,7 +1,6 @@
 package com.tatparya.proximate;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -10,17 +9,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
 
-public class MainActivity extends ActionBarActivity
-        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-
-    public GoogleApiClient mGoogleApiClient;
-    public Location mLastLocation;
+public class MainActivity extends ActionBarActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -36,8 +28,13 @@ public class MainActivity extends ActionBarActivity
     /**
      * The {@link ViewPager} that will host the section contents.
      */
+
     ViewPager mViewPager;
+
+    //  VARIABLE DECLARATIONS
     protected ParseUser mCurrentUser;
+
+    //  ACTIVITY METHODS
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,57 +57,15 @@ public class MainActivity extends ActionBarActivity
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter( this, getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        //  Google API Client init
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mGoogleApiClient.connect();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mGoogleApiClient.disconnect();
-    }
-
-    //  GOOGLE API CONNECTION MEATHODS
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.d(ProximateApplication.LOGTAG, "Connected to Google Play Services!");
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
-        if (mLastLocation != null) {
-            Log.d(ProximateApplication.LOGTAG, String.valueOf(mLastLocation.getLatitude()));
-            Log.d(ProximateApplication.LOGTAG, String.valueOf(mLastLocation.getLongitude()));
-        }
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.e( ProximateApplication.LOGTAG, "Failed to connect to Google Play Services API" );
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.e( ProximateApplication.LOGTAG, "Connection to Google Play Services suspended" );
-    }
-
-    //  OPTIONS MENU MEATHODS
+    //  OPTIONS MENU METHODS
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -140,6 +95,8 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    //  CUSTOM METHODS
+
     private void startLoginActivity() {
         //  Start Login Activity
         Intent intent = new Intent(this, LoginActivity.class);
@@ -147,5 +104,4 @@ public class MainActivity extends ActionBarActivity
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
-
 }

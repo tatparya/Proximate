@@ -19,6 +19,7 @@ public class SignUpActivity extends ActionBarActivity {
 
     protected EditText mUsername;
     protected EditText mPassword;
+    protected EditText mPasswordConfirm;
     protected EditText mEmail;
     protected Button mSignUpButton;
 
@@ -30,6 +31,7 @@ public class SignUpActivity extends ActionBarActivity {
         //  Find views
         mUsername = ( EditText ) findViewById( R.id.usernameField );
         mPassword = ( EditText ) findViewById( R.id.passwordField );
+        mPasswordConfirm = ( EditText ) findViewById( R.id.passwordConfirmField );
         mEmail = ( EditText ) findViewById( R.id.emailField );
         mSignUpButton = ( Button ) findViewById( R.id.signUpButton );
         //  Set click listener to button
@@ -70,21 +72,33 @@ public class SignUpActivity extends ActionBarActivity {
         //  ** Get user inputs **
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
+        String passwordConfirm = mPasswordConfirm.getText().toString();
         String email = mEmail.getText().toString();
 
         //  Trim any whitespaces
         username = username.trim();
         password = password.trim();
+        passwordConfirm = passwordConfirm.trim();
         email = email.trim();
 
         Log.d( ProximateApplication.LOGTAG, "Email : " + email );
 
-        //  Validate inputs
-        if( username.isEmpty() || password.isEmpty() || email.isEmpty() )
+        //  Validate inputs and save user
+        if( username.isEmpty() || password.isEmpty() || email.isEmpty() || passwordConfirm.isEmpty() )
         {
             //  ** Display error message **
             AlertDialog.Builder builder = new AlertDialog.Builder( SignUpActivity.this );
             builder.setMessage( R.string.empty_field_error_message )
+                    .setTitle( R.string.error_title )
+                    .setPositiveButton(android.R.string.ok, null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        else if( !password.equals( passwordConfirm ) )
+        {
+            //  ** Display error message **
+            AlertDialog.Builder builder = new AlertDialog.Builder( SignUpActivity.this );
+            builder.setMessage( R.string.password_doesnt_match_message )
                     .setTitle( R.string.error_title )
                     .setPositiveButton(android.R.string.ok, null);
             AlertDialog dialog = builder.create();

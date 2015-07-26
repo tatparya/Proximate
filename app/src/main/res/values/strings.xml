@@ -22,4 +22,11 @@
     <string name="sign_up_text">SIgn Up!</string>
     <string name="action_logout">Logout</string>
     <string name="empty_list_message">No Users Nearby!\nInvite your Friends!</string>
+    <string name="service_not_available">Service Not Available</string>
+    <string name="invalid_lat_long_used">Invalid Latitude Longitude used</string>
+    <string name="no_address_found">No address found at given location</string>
+    <string name="address_found">address found!</string>
+    <string name="no_geocoder_available">No location available</string>
+    <string name="password_confirm_hint">Confirm Password</string>
+    <string name="password_doesnt_match_message">The passwords do not match!</string>
 </resources>
