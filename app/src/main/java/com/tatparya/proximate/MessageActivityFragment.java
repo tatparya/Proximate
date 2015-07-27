@@ -70,6 +70,7 @@ public class MessageActivityFragment extends Fragment {
                 String data = messageEditText.getText().toString().trim();
                 if( !data.isEmpty() )
                 {
+                    //  Send message
                     messageEditText.setText( "" );
                     Log.d( ProximateApplication.LOGTAG, "Sending message : " + data );
                     //  Save message to parse database
@@ -85,6 +86,10 @@ public class MessageActivityFragment extends Fragment {
                                 // Success
                                 Toast.makeText( mContext, "Message sent successfully!", Toast.LENGTH_SHORT ).show();
                                 receiveMessage();
+                                //  Increase user score
+                                int score = (int) mCurrentUser.get( ParseConstants.KEY_USER_SCORE );
+                                mCurrentUser.put( ParseConstants.KEY_USER_SCORE, score + 1 );
+                                mCurrentUser.saveInBackground();
                             }
                         }
                     });

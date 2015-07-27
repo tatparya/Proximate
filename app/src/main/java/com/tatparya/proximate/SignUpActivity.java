@@ -118,6 +118,7 @@ public class SignUpActivity extends ActionBarActivity {
             newUser.setPassword( password );
             point = ProximateApplication.mGoogleLocationService.getLocation();
             newUser.put( ParseConstants.KEY_USER_LOCATION, point );
+            newUser.put( ParseConstants.KEY_USER_SCORE, 0 );
             Log.d( ProximateApplication.LOGTAG, "Got user location!" );
             //  Sign Up User
             newUser.signUpInBackground(new SignUpCallback() {

@@ -32,9 +32,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 newFragment = new ProfileFragment();
                 break;
-            case 1:
-                newFragment = new InboxFragment();
-                break;
+//            case 1:
+//                newFragment = new InboxFragment();
+//                break;
             default:
                 newFragment = new NearbyFragment();
         }

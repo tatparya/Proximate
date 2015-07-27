@@ -52,8 +52,9 @@ public class NearbyFragment extends Fragment {
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereNotEqualTo( ParseConstants.KEY_USERNAME, mCurrentUser.getUsername() );
-        query.whereNear( ParseConstants.KEY_USER_LOCATION, mUserLocation );
+        query.whereWithinKilometers( ParseConstants.KEY_USER_LOCATION, mUserLocation, 5 );
         query.setLimit(100);
+        query.orderByAscending( ParseConstants.KEY_USERNAME );
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> list, ParseException e) {
