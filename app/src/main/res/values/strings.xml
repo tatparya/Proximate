@@ -39,4 +39,10 @@
     <string name="title_message">Message</string>
     <string name="label_send">Send</string>
     <string name="message_hint">type your message</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_inbox_message">No messages in inbox\nStart a new conversation!</string>
+    <string name="title_inbox">Inbox</string>
+    <string name="send_at_label">Sent at</string>
 </resources>

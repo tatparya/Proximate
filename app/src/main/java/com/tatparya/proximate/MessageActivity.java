@@ -1,7 +1,8 @@
 package com.tatparya.proximate;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,8 +13,13 @@ public class MessageActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        //  Get extra
+        MessageActivityFragment fragment = ( MessageActivityFragment )
+                getSupportFragmentManager().findFragmentById( R.id.messageFragment );
 
+        Intent intent = getIntent();
+        String recepientId = intent.getStringExtra( ParseConstants.KEY_RECIPIENT_ID );
+        String username = intent.getStringExtra( ParseConstants.KEY_USERNAME );
+        fragment.setRecepientId( recepientId, username );
     }
 
 

@@ -51,6 +51,7 @@ public class NearbyFragment extends Fragment {
         mCurrentUser = ParseUser.getCurrentUser();
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereNotEqualTo( ParseConstants.KEY_USERNAME, mCurrentUser.getUsername() );
         query.whereNear( ParseConstants.KEY_USER_LOCATION, mUserLocation );
         query.setLimit(100);
         query.findInBackground(new FindCallback<ParseUser>() {
@@ -111,11 +112,11 @@ public class NearbyFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 //  Get reciever username and start message activity
-                String receiver = mUsers.get( position ).getUsername();
-                Log.d( ProximateApplication.LOGTAG, "Messaging : " + receiver );
+                Log.d( ProximateApplication.LOGTAG, "Messaging : " + mUsers.get( position ).getUsername() );
                 Intent intent = new Intent( mContext, MessageActivity.class );
-                intent.putExtra( ParseConstants.KEY_RECIPIENT_NAME, receiver );
-                startActivity( intent );
+                intent.putExtra( ParseConstants.KEY_RECIPIENT_ID, mUsers.get( position ).getObjectId() );
+                intent.putExtra( ParseConstants.KEY_USERNAME, mUsers.get( position ).getUsername() );
+                startActivity(intent);
             }
         };
     }

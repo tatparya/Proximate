@@ -32,6 +32,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 newFragment = new ProfileFragment();
                 break;
+            case 1:
+                newFragment = new InboxFragment();
+                break;
             default:
                 newFragment = new NearbyFragment();
         }
@@ -41,7 +44,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         //  Show two total pages
-        return 2;
+        return 3;
     }
 
     @Override
@@ -49,9 +52,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Locale l = Locale.getDefault();
         switch (position) {
             case 0:
-                return mContext.getString(R.string.title_section1).toUpperCase(l);
+                return mContext.getString(R.string.title_profile).toUpperCase(l);
             case 1:
-                return mContext.getString(R.string.title_section2).toUpperCase(l);
+                return mContext.getString(R.string.title_inbox).toUpperCase(l);
+            case 2:
+                return mContext.getString(R.string.title_nearby).toUpperCase(l);
         }
         return null;
     }

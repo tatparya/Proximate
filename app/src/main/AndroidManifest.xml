@@ -42,6 +42,9 @@
         <activity
             android:name=".MessageActivity"
             android:label="@string/title_activity_message" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tatparya.proximate.MainActivity" />
         </activity>
     </application>
 
