@@ -1,9 +1,9 @@
 package com.tatparya.proximate;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +16,7 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class SignUpActivity extends ActionBarActivity {
+public class SignUpActivity extends Activity {
 
     protected EditText mUsername;
     protected EditText mPassword;

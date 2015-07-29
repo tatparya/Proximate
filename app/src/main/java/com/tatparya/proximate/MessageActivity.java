@@ -1,12 +1,10 @@
 package com.tatparya.proximate;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 
-public class MessageActivity extends ActionBarActivity {
+public class MessageActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,34 +12,11 @@ public class MessageActivity extends ActionBarActivity {
         setContentView(R.layout.activity_message);
 
         MessageActivityFragment fragment = ( MessageActivityFragment )
-                getSupportFragmentManager().findFragmentById( R.id.messageFragment );
+                getFragmentManager().findFragmentById( R.id.messageFragment );
 
         Intent intent = getIntent();
         String recepientId = intent.getStringExtra( ParseConstants.KEY_RECIPIENT_ID );
         String username = intent.getStringExtra( ParseConstants.KEY_USERNAME );
         fragment.setRecepientId( recepientId, username );
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_message, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

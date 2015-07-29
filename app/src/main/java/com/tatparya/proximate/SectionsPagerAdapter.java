@@ -1,9 +1,9 @@
 package com.tatparya.proximate;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.support.v13.app.FragmentPagerAdapter;
 
 import java.util.Locale;
 
@@ -32,9 +32,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 newFragment = new ProfileFragment();
                 break;
-//            case 1:
-//                newFragment = new InboxFragment();
-//                break;
             default:
                 newFragment = new NearbyFragment();
         }
@@ -44,7 +41,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         //  Show two total pages
-        return 3;
+        return 2;
     }
 
     @Override
@@ -53,11 +50,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 return mContext.getString(R.string.title_profile).toUpperCase(l);
-            case 1:
-                return mContext.getString(R.string.title_inbox).toUpperCase(l);
-            case 2:
+            default:
                 return mContext.getString(R.string.title_nearby).toUpperCase(l);
         }
-        return null;
     }
 }

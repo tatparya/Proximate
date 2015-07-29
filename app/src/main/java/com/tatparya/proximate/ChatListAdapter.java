@@ -1,7 +1,6 @@
 package com.tatparya.proximate;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +27,9 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
     public View getView(int position, View convertView, ViewGroup parent) {
         Message message = (Message) getItem( position );
 
-        Log.d(ProximateApplication.LOGTAG, "User logged in : " + mUserId
-        + ", message from : " + message.getSenderName() + ", message : "
-        + message.getBody());
+//        Log.d(ProximateApplication.LOGTAG, "User logged in : " + mUserId
+//        + ", message from : " + message.getSenderName() + ", message : "
+//        + message.getBody());
         if( message.getSenderName().equals(mUserId) )
         {
             // Sent message
