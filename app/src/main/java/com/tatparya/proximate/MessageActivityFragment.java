@@ -25,7 +25,6 @@ public class MessageActivityFragment extends Fragment {
     protected ParseUser recepientUser;
     protected EditText messageEditText;
     protected Button sendButton;
-    protected TextView recepientNameText;
     protected View mRootView;
     protected ListView chatListView;
     protected ChatListAdapter mAdapter;
@@ -39,7 +38,6 @@ public class MessageActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_message, container, false);
-        recepientNameText = (TextView) mRootView.findViewById( R.id.recepient_name_text );
         messageEditText = (EditText) mRootView.findViewById( R.id.messageEditText );
         sendButton = (Button) mRootView.findViewById( R.id.sendButton );
         chatListView = (ListView) mRootView.findViewById( R.id.chat_listView );
@@ -51,7 +49,6 @@ public class MessageActivityFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        recepientNameText.setText( mRecepientName );
         sendButton.setOnClickListener( sendMessage() );
 
         //  Populate chat list
@@ -130,23 +127,6 @@ public class MessageActivityFragment extends Fragment {
                 }
             }
         });
-
-//        query.findInBackground(new FindCallback<Message>() {
-//            @Override
-//            public void done(List<Message> list, ParseException e) {
-//                if( e == null )
-//                {
-//                    mMessages.clear();
-//                    mMessages.addAll(list);
-//                    mAdapter.notifyDataSetChanged();
-//                    chatListView.invalidate();
-//                }
-//                else
-//                {
-//                    Toast.makeText( mContext, "Error fetching messages", Toast.LENGTH_SHORT ).show();
-//                }
-//            }
-//        });
     }
 
     public void setRecepientId( String id, String name )

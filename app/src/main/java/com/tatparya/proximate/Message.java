@@ -20,8 +20,6 @@ public class Message extends ParseObject {
         return getString(ParseConstants.KEY_SENDER_NAME);
     }
 
-    public Date getCreatedAt() { return getDate( ParseConstants.KEY_CREATED_AT ); }
-
     public String getBody() {
         return getString(ParseConstants.KEY_MESSAGE_BODY);
     }

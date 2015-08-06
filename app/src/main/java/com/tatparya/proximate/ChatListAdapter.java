@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,9 +30,6 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
     public View getView(int position, View convertView, ViewGroup parent) {
         Message message = (Message) getItem( position );
 
-//        Log.d(ProximateApplication.LOGTAG, "User logged in : " + mUserId
-//        + ", message from : " + message.getSenderName() + ", message : "
-//        + message.getBody());
         if( message.getSenderName().equals(mUserId) )
         {
             // Sent message
@@ -44,15 +44,20 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
         final ViewHolder holder = new ViewHolder();
         holder.name = (TextView) convertView.findViewById(R.id.username_text);
         holder.body = (TextView) convertView.findViewById(R.id.body_text);
+        holder.sentAt = (TextView) convertView.findViewById(R.id.sent_at_text);
         convertView.setTag(holder);
 
-        holder.name.setText( message.getSenderName() );
+        holder.name.setText(message.getSenderName());
         holder.body.setText( message.getBody() );
+        DateFormat format = new SimpleDateFormat("HH:mm");
+        Date sentAt = message.getCreatedAt();
+        holder.sentAt.setText( format.format( sentAt ) );
         return convertView;
     }
 
     public final class ViewHolder{
         public TextView name;
         public TextView body;
+        public TextView sentAt;
     }
 }
