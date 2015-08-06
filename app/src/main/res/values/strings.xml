@@ -45,4 +45,5 @@
     <string name="empty_inbox_message">No messages in inbox\nStart a new conversation!</string>
     <string name="title_inbox">Inbox</string>
     <string name="send_at_label">Sent at</string>
+    <string name="nearby_loading_text">Finding Users Nearby</string>
 </resources>

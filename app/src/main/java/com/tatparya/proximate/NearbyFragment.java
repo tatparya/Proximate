@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.*;
 import com.parse.*;
 
@@ -27,6 +29,8 @@ public class NearbyFragment extends Fragment {
     protected ListView mListView;
     protected TextView emptyTextView;
     protected Context mContext;
+    protected ImageButton loader;
+    protected TextView loaderText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,6 +38,8 @@ public class NearbyFragment extends Fragment {
         mCurrentUser = ParseUser.getCurrentUser();
         mListView = (ListView) mRootView.findViewById(R.id.nearbyListView);
         emptyTextView = (TextView) mRootView.findViewById(R.id.emptyListView);
+        loader = (ImageButton) mRootView.findViewById(R.id.loader);
+        loaderText = (TextView) mRootView.findViewById(R.id.loading_text);
         mContext = getActivity();
         if( mCurrentUser != null )
         {
@@ -49,6 +55,14 @@ public class NearbyFragment extends Fragment {
 
         //  ** GET ALL USERS NEARBY AND POPULATE LIST **
         mCurrentUser = ParseUser.getCurrentUser();
+        emptyTextView.setVisibility( View.INVISIBLE );
+        loader.setVisibility( View.VISIBLE );
+        loaderText.setVisibility( View.VISIBLE );
+        RotateAnimation rotate = new RotateAnimation( 0, -360,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f );
+        rotate.setDuration(1500);
+        rotate.setRepeatCount(-1);
+        loader.setAnimation( rotate );
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereNotEqualTo( ParseConstants.KEY_USERNAME, mCurrentUser.getUsername() );
@@ -60,8 +74,11 @@ public class NearbyFragment extends Fragment {
             public void done(List<ParseUser> list, ParseException e) {
                 if( e == null )
                 {
+                    loader.clearAnimation();
+                    loader.setVisibility( View.GONE );
+                    loaderText.setVisibility( View.GONE );
                     //  Success : Extract user names and set to list
-                    setUsersToList( list );
+                    setUsersToList(list);
                 }
                 else
                 {
