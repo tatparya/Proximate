@@ -1,9 +1,13 @@
 package com.tatparya.proximate;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +23,8 @@ import java.util.List;
  */
 public class MessageActivityFragment extends Fragment {
 
+    public boolean active = false;
+
     protected String mRecepientId;
     protected String mRecepientName;
     protected ParseUser mCurrentUser;
@@ -30,6 +36,7 @@ public class MessageActivityFragment extends Fragment {
     protected ChatListAdapter mAdapter;
     protected ArrayList<Message> mMessages;
     protected Context mContext;
+    protected NotificationListener mMessageReceiver;
 
     public MessageActivityFragment() {
     }
@@ -49,7 +56,11 @@ public class MessageActivityFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        sendButton.setOnClickListener( sendMessage() );
+        mMessageReceiver = new NotificationListener();
+        IntentFilter filter = new IntentFilter( "com.parse.push.intent.RECEIVE" );
+        mContext.registerReceiver( mMessageReceiver, filter );
+        active = true;
+        sendButton.setOnClickListener(sendMessage());
 
         //  Populate chat list
         mMessages = new ArrayList<Message>();
@@ -57,6 +68,13 @@ public class MessageActivityFragment extends Fragment {
                 mCurrentUser.getUsername(), mMessages);
         chatListView.setAdapter( mAdapter );
         receiveMessage();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        active = false;
+        mContext.unregisterReceiver(mMessageReceiver);
     }
 
     @NonNull
@@ -153,5 +171,15 @@ public class MessageActivityFragment extends Fragment {
     {
         mRecepientId = id;
         mRecepientName = name;
+    }
+
+    private class NotificationListener extends ParsePushBroadcastReceiver {
+        @Override
+        protected void onPushReceive(Context context, Intent intent) {
+            super.onPushReceive(context, intent);
+
+            Log.d(ProximateApplication.LOGTAG, "Broadcast Received!!");
+            receiveMessage();
+        }
     }
 }
