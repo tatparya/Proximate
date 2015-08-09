@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import com.parse.ParseAnalytics;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 public class MainActivity extends Activity {
@@ -50,6 +51,10 @@ public class MainActivity extends Activity {
         if (mCurrentUser != null) {
             // User logged in
             Log.d(ProximateApplication.LOGTAG, "User logged in : " + mCurrentUser.getUsername());
+            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+            installation.put( ParseConstants.KEY_USERNAME, ParseUser.getCurrentUser().getUsername() );
+            installation.put( ParseConstants.CLASS_USER, ParseUser.getCurrentUser() );
+            installation.saveInBackground();
         } else {
             //  User not logged in, Start Login Activity
             Log.d(ProximateApplication.LOGTAG, "No user logged in, starting loginActivity");

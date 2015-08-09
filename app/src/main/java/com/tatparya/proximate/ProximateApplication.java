@@ -4,8 +4,10 @@ import android.app.Application;
 import android.util.Log;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 /**
@@ -25,7 +27,7 @@ public class ProximateApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Log.d( LOGTAG, "Hello World!!" );
+        Log.d(LOGTAG, "Hello World!!");
         //  API initializations to be done HERE ~
 
         // Register your parse models here
@@ -48,6 +50,8 @@ public class ProximateApplication extends Application {
 
         mGoogleLocationService = new GoogleLocationService( getApplicationContext() );
         mGoogleLocationService.connectService();
+
+
     }
 
     @Override

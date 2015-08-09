@@ -72,9 +72,9 @@ public class MessageActivityFragment extends Fragment {
                     Log.d( ProximateApplication.LOGTAG, "Sending message : " + data );
                     //  Save message to parse database
                     Message message = new Message();
-                    message.setSenderName( mCurrentUser.getUsername() );
+                    message.setSenderName(mCurrentUser.getUsername());
                     message.setRecepientName(mRecepientName);
-                    message.setMessageBody( data );
+                    message.setMessageBody(data);
                     message.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -87,6 +87,26 @@ public class MessageActivityFragment extends Fragment {
                                 int score = (int) mCurrentUser.get( ParseConstants.KEY_USER_SCORE );
                                 mCurrentUser.put( ParseConstants.KEY_USER_SCORE, score + 1 );
                                 mCurrentUser.saveInBackground();
+                            }
+                        }
+                    });
+                    //  Send push notification to other user
+                    ParseQuery pushQuery = ParseInstallation.getQuery();
+                    Log.d( ProximateApplication.LOGTAG, "Seding push, " + ParseConstants.CLASS_USER + " : " + mRecepientId );
+                    pushQuery.whereEqualTo( ParseConstants.KEY_USERNAME, mRecepientName );
+                    ParsePush push = new ParsePush();
+                    push.setQuery( pushQuery );
+                    push.setMessage(mCurrentUser.getUsername() + " sent you a message!");
+                    push.sendInBackground(new SendCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if( e == null )
+                            {
+                                Log.d( ProximateApplication.LOGTAG, "Push sent successfully!" );
+                            }
+                            else
+                            {
+                                Log.d( ProximateApplication.LOGTAG, "Push could not be sent : " + e.getMessage() );
                             }
                         }
                     });
