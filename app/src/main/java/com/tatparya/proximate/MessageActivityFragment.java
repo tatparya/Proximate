@@ -99,7 +99,8 @@ public class MessageActivityFragment extends Fragment {
                             if( e == null )
                             {
                                 // Success
-                                Toast.makeText( mContext, "Message sent successfully!", Toast.LENGTH_SHORT ).show();
+//                                Toast.makeText( mContext, "Message sent successfully!", Toast.LENGTH_SHORT ).show();
+                                //  TODO : Make this more efficient
                                 receiveMessage();
                                 //  Increase user score
                                 int score = (int) mCurrentUser.get( ParseConstants.KEY_USER_SCORE );
@@ -138,6 +139,8 @@ public class MessageActivityFragment extends Fragment {
     }
 
     private void receiveMessage(){
+        Toast.makeText( mContext, "Fetching messages...", Toast.LENGTH_SHORT ).show();
+
         ParseQuery<Message> queryIncoming = ParseQuery.getQuery(Message.class);
         queryIncoming.whereEqualTo( ParseConstants.KEY_RECIPIENT_NAME, mCurrentUser.getUsername() );
         queryIncoming.whereEqualTo( ParseConstants.KEY_SENDER_NAME, mRecepientName );
