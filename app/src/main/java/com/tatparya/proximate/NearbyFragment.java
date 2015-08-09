@@ -53,41 +53,47 @@ public class NearbyFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        //  ** GET ALL USERS NEARBY AND POPULATE LIST **
-        mCurrentUser = ParseUser.getCurrentUser();
-        emptyTextView.setVisibility( View.INVISIBLE );
-        loader.setVisibility( View.VISIBLE );
-        loaderText.setVisibility( View.VISIBLE );
-        RotateAnimation rotate = new RotateAnimation( 0, -360,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f );
-        rotate.setDuration(1500);
-        rotate.setRepeatCount(-1);
-        loader.setAnimation( rotate );
+        int userCount = mListView.getCount();
+        if( userCount == 0 )
+        {
+            //  ** GET ALL USERS NEARBY AND POPULATE LIST **
+            mCurrentUser = ParseUser.getCurrentUser();
+            emptyTextView.setVisibility( View.INVISIBLE );
+            loader.setVisibility( View.VISIBLE );
+            loaderText.setVisibility( View.VISIBLE );
+            RotateAnimation rotate = new RotateAnimation( 0, -360,
+                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f );
+            rotate.setDuration(1500);
+            rotate.setRepeatCount(-1);
+            loader.setAnimation( rotate );
 
-        ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.whereNotEqualTo( ParseConstants.KEY_USERNAME, mCurrentUser.getUsername() );
-        query.whereWithinKilometers( ParseConstants.KEY_USER_LOCATION, mUserLocation, 5 );
-        query.setLimit(100);
-        query.orderByAscending( ParseConstants.KEY_USERNAME );
-        query.findInBackground(new FindCallback<ParseUser>() {
-            @Override
-            public void done(List<ParseUser> list, ParseException e) {
-                if( e == null )
-                {
-                    loader.clearAnimation();
-                    loader.setVisibility( View.GONE );
-                    loaderText.setVisibility( View.GONE );
-                    //  Success : Extract user names and set to list
-                    setUsersToList(list);
+            ParseQuery<ParseUser> query = ParseUser.getQuery();
+            query.whereNotEqualTo( ParseConstants.KEY_USERNAME, mCurrentUser.getUsername() );
+            query.whereWithinKilometers( ParseConstants.KEY_USER_LOCATION, mUserLocation, 5 );
+            query.setLimit(100);
+            query.orderByAscending( ParseConstants.KEY_USERNAME );
+            query.findInBackground(new FindCallback<ParseUser>() {
+                @Override
+                public void done(List<ParseUser> list, ParseException e) {
+                    if( e == null )
+                    {
+                        loader.clearAnimation();
+                        loader.setVisibility( View.GONE );
+                        loaderText.setVisibility( View.GONE );
+                        //  Success : Extract user names and set to list
+                        setUsersToList(list);
+                    }
+                    else
+                    {
+                        //  Failed : Show error message
+                        Toast.makeText(mContext, "Failed to find people nearby.\nPlease try again later!",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else
-                {
-                    //  Failed : Show error message
-                    Toast.makeText(mContext, "Failed to find people nearby.\nPlease try again later!",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+            });
+        }
+
+
     }
 
     private void setUsersToList( List<ParseUser> list )
