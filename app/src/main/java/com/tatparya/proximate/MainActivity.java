@@ -51,9 +51,11 @@ public class MainActivity extends Activity {
         if (mCurrentUser != null) {
             // User logged in
             Log.d(ProximateApplication.LOGTAG, "User logged in : " + mCurrentUser.getUsername());
+            //  Add logged in User to installation
             ParseInstallation installation = ParseInstallation.getCurrentInstallation();
             installation.put( ParseConstants.KEY_USERNAME, ParseUser.getCurrentUser().getUsername() );
             installation.put( ParseConstants.CLASS_USER, ParseUser.getCurrentUser() );
+            Log.d( ProximateApplication.LOGTAG, "User : " + mCurrentUser.getUsername() + " added to current installation!" );
             installation.saveInBackground();
         } else {
             //  User not logged in, Start Login Activity
